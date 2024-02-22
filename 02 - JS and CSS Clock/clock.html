@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+  <link rel="icon" href="https://fav.farm/🔥" />
+</head>
+
+<body>
+
+
+  <div class="clock">
+    <div class="clock-face">
+      <div class="hand hour-hand transition"></div>
+      <div class="hand min-hand transition"></div>
+      <div class="hand second-hand transition"></div>
+    </div>
+  </div>
+
+
+  <style>
+    :root {
+      --dark-brown: #221208;
+      --brown: #443124;
+      --light-brown: #866b5c;
+    }
+
+    html {
+      background-size: cover;
+      font-family: 'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+
+    body {
+      background-color: #ebeae1;
+      margin: 0;
+      font-size: 2rem;
+      display: flex;
+      flex: 1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .clock {
+      width: 30rem;
+      height: 30rem;
+      border: 20px solid var(--brown);
+      border-radius: 50%;
+      margin: 50px auto;
+      position: relative;
+      padding: 2rem;
+      box-shadow:
+        0 0 0 4px rgba(0, 0, 0, 0.1),
+        inset 0 0 0 3px var(--light-brown),
+        inset 0 0 10px var(--brown),
+        0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      /* transform: rotate(90deg) */
+    }
+
+    .hand {
+      width: 50%;
+      height: 6px;
+      background: var(--dark-brown);
+      position: absolute;
+      top: 50%;
+      box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.2);
+    }
+
+    .second-hand {
+      height: 3px;
+      border-right: solid 4rem var(--dark-brown);
+      /* offseting due to hand's height */
+      transform: translateY(-1.5px);
+
+      /* sets the origin in the clock's center */
+      transform-origin: calc(100% - 4rem);
+    }
+
+    .min-hand {
+      width: 50%;
+      border-right: solid 3rem var(--dark-brown);
+      /* offseting due to hand's height */
+      transform: translateY(-3px);
+      /* sets the origin in the clock's center */
+      transform-origin: calc(100% - 3rem);
+
+    }
+
+    .hour-hand {
+      left: 20%;
+      width: 30%;
+      border-right: solid 3rem var(--dark-brown);
+
+      /* offseting due to hand's height */
+      transform: translateY(-3px);
+      /* sets the origin in the clock's center */
+      transform-origin: calc(100% - 3rem);
+    }
+  </style>
+
+  <script src="clock.js"></script>
+</body>
+
+</html>
