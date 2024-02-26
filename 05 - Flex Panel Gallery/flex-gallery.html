@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>Flex Panels 💪</title>
   <link href='https://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
-  <link rel="icon" href="https://fav.farm/✅" />
+  <link rel="icon" href="https://fav.farm/🔥" />
 </head>
 
 <body>
@@ -31,11 +31,13 @@
     .panels {
       min-height: 100vh;
       overflow: hidden;
+
       display: flex;
     }
 
     .panel {
       background: #6B0F9C;
+      cursor: pointer;
       box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.1);
       color: white;
       text-align: center;
@@ -45,14 +47,16 @@
       transition:
         font-size 0.7s cubic-bezier(0.61, -0.19, 0.7, -0.11),
         flex 0.7s cubic-bezier(0.61, -0.19, 0.7, -0.11),
-        background 0.2s;
+        background 0.2s,
+        filter 1s;
       font-size: 20px;
       background-size: cover;
       background-position: center;
-      flex: 1;
-      justify-content: center;
+      filter: brightness(0.7);
       display: flex;
       flex-direction: column;
+      justify-content: space-around;
+      flex: 1;
     }
 
     .panel1 {
@@ -75,31 +79,12 @@
       background-image: url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500);
     }
 
-    /* Flex Items */
+    /* Flex Children */
     .panel>* {
       margin: 0;
       width: 100%;
       transition: transform 0.5s;
-      flex: 1 0 auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .panel>*:first-child {
-      transform: translateY(-100%);
-    }
-
-    .panel.open-active>*:first-child {
-      transform: translateY(0);
-    }
-
-    .panel>*:last-child {
-      transform: translateY(100%);
-    }
-
-    .panel.open-active>*:last-child {
-      transform: translateY(0);
+      pointer-events: none;
     }
 
     .panel p {
@@ -109,19 +94,30 @@
       font-size: 2em;
     }
 
+    .panel p:nth-child(1) {
+      transform: translateY(-10rem);
+    }
+
     .panel p:nth-child(2) {
       font-size: 4em;
+    }
+
+    .panel p:nth-child(3) {
+      transform: translateY(10rem);
+    }
+
+    .panel p.show {
+      transform: none;
+    }
+
+    .panel:hover {
+      filter: brightness(1)
     }
 
     .panel.open {
       flex: 5;
       font-size: 40px;
-    }
-
-    @media only screen and (max-width: 600px) {
-      .panel p {
-        font-size: 1em;
-      }
+      filter: brightness(1)
     }
   </style>
 
@@ -155,24 +151,58 @@
   </div>
 
   <script>
-    const panels = document.querySelectorAll('.panel');
+    let $openedPanel = null;
+    let isAnimating = false;
 
-    function toggleOpen() {
-      console.log('Hello');
-      this.classList.toggle('open');
+    // Moves the text into/out of the viewport
+    function toggleText($panel) {
+      const $topText = $panel.firstElementChild;
+      const $bottomText = $panel.lastElementChild;
+      $topText.classList.toggle("show");
+      $bottomText.classList.toggle("show");
     }
 
-    function toggleActive(e) {
-      console.log(e.propertyName);
-      if (e.propertyName.includes('flex')) {
-        this.classList.toggle('open-active');
+    function togglePanel($panel) {
+      // Start ignoring clicks
+      isAnimating = true;
+
+      $panel.classList.toggle("open");
+    }
+
+    function handleClick(e) {
+      // If is animating, clicks will be ignored
+      if (isAnimating) return;
+
+      // Get last opened panel and current panel
+      $openedPanel = document.querySelector(".panel.open");
+      const $clickedPanel = e.target;
+
+      // Close last opened panel
+      if ($openedPanel !== null && $openedPanel !== $clickedPanel) {
+        $openedPanel.click();
       }
+
+      togglePanel($clickedPanel);
     }
 
-    panels.forEach(panel => panel.addEventListener('click', toggleOpen));
-    panels.forEach(panel => panel.addEventListener('transitionend', toggleActive));
-  </script>
+    const $panels = document.querySelectorAll(".panel");
+    $panels.forEach(($panel) => {
+      $panel.addEventListener("click", handleClick);
+    });
 
+    $panels.forEach($panel => {
+      $panel.addEventListener("transitionend", (e) => {
+        // After panel animation toggle the text
+        if (e.propertyName.includes("flex")) {
+          toggleText($panel);
+        };
+
+        if (e.propertyName === "transform") {
+          isAnimating = false;
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>
