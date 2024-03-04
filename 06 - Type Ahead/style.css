@@ -1,6 +1,10 @@
+:root {
+  --primary-color: #3baaf5;
+}
+
 html {
   box-sizing: border-box;
-  background: #ffc600;
+  background: var(--primary-color);
   font-family: "helvetica neue";
   font-size: 20px;
   font-weight: 200;
@@ -32,7 +36,7 @@ input.search {
   position: relative;
   top: 10px;
   z-index: 2;
-  border-radius: 5px;
+  border-radius: 10em;
   font-size: 40px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.19);
 }
@@ -45,7 +49,7 @@ input.search {
 }
 
 .suggestions li {
-  background: white;
+  background-color: white;
   list-style: none;
   border-bottom: 1px solid #d8d8d8;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.14);
@@ -73,5 +77,14 @@ span.population {
 }
 
 .hl {
-  background: #ffc600;
+  background: var(--primary-color);
+}
+
+li.show-more {
+  display: block;
+  margin-top: 1rem;
+  text-transform: none;
+  font-style: italic;
+  text-align: center;
+  cursor: pointer;
 }
