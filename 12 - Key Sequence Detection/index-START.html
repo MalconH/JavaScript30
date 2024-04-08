@@ -5,8 +5,78 @@
     <title>Key Detection</title>
     <script type="text/javascript" src="./cornify.js"></script>
     <link rel="icon" href="https://fav.farm/🔥" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      main {
+        background-color: #0d3323;
+        color: #50a07f;
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        gap: 1rem;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      h1 {
+        font-size: 3rem;
+      }
+      p {
+        font-family: sans-serif;
+        font-weight: 600;
+      }
+    </style>
   </head>
   <body>
-    <script></script>
+    <main>
+      <h1>Please, type the secret code.</h1>
+      <p id="output"></p>
+    </main>
+    <script>
+      // Returns false if the sequence is wrong
+      function checkSequence(sequence, sequenceToMatch) {
+        for (let i = 0; i < sequence.length; i++) {
+          // If characters don't match
+          if (sequence[i].toLowerCase() !== sequenceToMatch[i].toLowerCase()) return false;
+        }
+
+        return true;
+      }
+
+      const $output = document.querySelector("#output");
+      let userSequence = [];
+      const secretCode =
+        "ArrowUp ArrowUp ArrowDown ArrowDown ArrowLeft ArrowRight ArrowLeft ArrowRight B A".split(
+          " "
+        );
+
+      function handleKeyDown(e) {
+        const keyPressed = e.key;
+        userSequence.push(keyPressed);
+        const isCorrectSequence = checkSequence(userSequence, secretCode);
+
+        // Clear output while insert correct sequence
+        if (isCorrectSequence) {
+          $output.textContent = "";
+        }
+        // Incorrect sequence
+        if (!isCorrectSequence) {
+          $output.textContent = "Wrong code. Please, try again.";
+          userSequence = [];
+        }
+
+        // Correct sequence
+        if (userSequence.join("").toLowerCase() === secretCode.join("").toLowerCase()) {
+          $output.textContent = "The code is correct.";
+          userSequence = [];
+        }
+      }
+
+      window.addEventListener("keydown", handleKeyDown);
+    </script>
   </body>
 </html>
