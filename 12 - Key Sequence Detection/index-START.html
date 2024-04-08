@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Key Detection</title>
-    <script type="text/javascript" src="./cornify.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
     <link rel="icon" href="https://fav.farm/🔥" />
     <style>
       * {
@@ -37,6 +37,8 @@
       <p id="output"></p>
     </main>
     <script>
+      const jsConfetti = new JSConfetti();
+
       // Returns false if the sequence is wrong
       function checkSequence(sequence, sequenceToMatch) {
         for (let i = 0; i < sequence.length; i++) {
@@ -72,6 +74,7 @@
         // Correct sequence
         if (userSequence.join("").toLowerCase() === secretCode.join("").toLowerCase()) {
           $output.textContent = "The code is correct.";
+          jsConfetti.addConfetti().then(() => jsConfetti.clearCanvas());
           userSequence = [];
         }
       }
