@@ -30,8 +30,10 @@ function changeProgress(e) {
   // fullWidth - video.duration
   // px - x
   // x = px * duracionTotal / fullwidth
+  // const videoDuration = $video.duration;
+  // const progressBarLength = $progressBar.offsetWidth;
   const progress = (e.offsetX * $video.duration) / $progressBar.offsetWidth;
-  console.log(progress);
+  $watchedBar.style.flexBasis = `${e.offsetX}px`;
   $video.currentTime = progress;
 }
 
