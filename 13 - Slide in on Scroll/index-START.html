@@ -197,12 +197,24 @@
       }
 
       function handleScroll(e) {
+        document.querySelector(".line")?.remove();
+
+        const $line = document.createElement("div");
+        $line.className = "line";
+        $line.style.height = "2px";
+        $line.style.width = "100%";
+        $line.style.position = "absolute";
+        $line.style.top = "0";
+        $line.style.backgroundColor = "red";
+        document.body.appendChild($line);
+
         document.querySelectorAll("img").forEach((image, index) => {
           const slideInAt = window.scrollY + window.innerHeight - image.height / 2;
           const imageBottom = image.offsetTop + image.height;
 
           const isHalfShown = slideInAt > image.offsetTop;
           const isNotScrolledPast = window.scrollY < imageBottom;
+          $line.style.top = slideInAt + "px";
 
           if (isHalfShown && isNotScrolledPast) {
             image.classList.add("active");
